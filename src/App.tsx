@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import Formulario from './components/Formulario';
+import PintarDatos from './components/PintarDatos';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = () => { 
+  
+   const [nombrePersonaje,setNombrePersonaje]= useState('');
+  
+   useEffect(() => {
+     console.log(localStorage.getItem('nombreApi'))
+    
+     if(localStorage.getItem('nombreApi')){
+      setNombrePersonaje(JSON.parse(localStorage.getItem('nombreApi')!))
+     }
+
+   
+   }, [])
+   
+   useEffect(()=>{
+    localStorage.setItem('nombreApi',JSON.stringify(nombrePersonaje))
+   },[nombrePersonaje]);
+
+   return (
+    
+    <div className='container'>
+    <h1>App MARVEL</h1>
+     <Formulario setNombrePersonaje={setNombrePersonaje}/>  
+     <PintarDatos nombrePersonaje  = {nombrePersonaje}/>
     </div>
-  );
+    
+    
+  )
 }
 
-export default App;
+export default App
